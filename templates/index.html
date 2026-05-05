@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Психометрика</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Система тестирования</h1>
+            <p>Выберите интересующий вас тест ниже</p>
+        </header>
+
+        <section class="tests-grid">
+            {% for test in tests %}
+            <div class="card test-card">
+                <h3>{{ test.title }}</h3>
+                <p>{{ test.description }}</p>
+                <a href="/test/{{ test.id }}" class="btn">Начать прохождение</a>
+            </div>
+            {% endfor %}
+        </section>
+
+        {% if history %}
+        <section class="history-section">
+            <hr>
+            <h3>Последние активности</h3>
+            <div class="history-table">
+                {% for res in history %}
+                <div class="history-item">
+                    <span class="user-tag">{{ res.username }}</span>
+                    <span class="test-name">{{ res.test.title }}</span>
+                    <span class="score-badge">{{ res.score }} б.</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</body>
+</html>

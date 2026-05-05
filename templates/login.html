@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card auth-card">
+            <h1>Личные данные</h1>
+            <p>Пожалуйста, введите ваше имя для сохранения результатов теста в базе данных.</p>
+            <form action="/test/{{ test_id }}" method="get">
+                <input type="text" name="username" placeholder="Ваше имя или никнейм" required>
+                <button type="submit" class="btn">Зайти и начать тест</button>
+            </form>
+            <a href="/" class="link-back">← На главную</a>
+        </div>
+    </div>
+</body>
+</html>

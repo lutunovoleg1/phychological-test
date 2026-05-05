@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Результат теста</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Тест завершен, {{ username }}!</h1>
+            <p>Тест: <strong>{{ test.title }}</strong></p>
+            
+            <div class="result-box">
+                <p class="interpretation-text">{{ result_text }}</p>
+            </div>
+
+            <hr>
+            <h3>Ваши показатели:</h3>
+            <ul class="scores-list">
+                {% for scale_name, value in scores.items() %}
+                <li class="history-item">
+                    <span>Шкала: <strong>{{ scale_name }}</strong></span>
+                    <span>{{ value }} баллов</span>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <a href="/" class="btn">Вернуться на главную</a>
+        </div>
+    </div>
+</body>
+</html>
