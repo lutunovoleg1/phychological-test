@@ -8,35 +8,25 @@
 <body>
     <div class="card">
         <h2>{{ test.title }}</h2>
+        <p class="progress">Вопрос {{ question_number }} из {{ questions_count }}</p>
         <p><strong>Вопрос:</strong> {{ question.text }}</p>
 
         <div class="answers">
-            {% for answer in question.answers %}
-            <button onclick="submitAnswer('{{ answer.scale }}', {{ answer.score | default(0) }})">
-                {{ answer.text }}
-            </button>
+            {% for answer in question.answer_options %}
+            <form action="/test/{{ test.id }}/answer" method="post">
+                <input type="hidden" name="session_id" value="{{ session_id }}">
+                <input type="hidden" name="answer_code" value="{{ answer.code }}">
+                <button type="submit">{{ answer.text }}</button>
+            </form>
             {% endfor %}
         </div>
 
         {% if can_go_back %}
-        <button onclick="history.back()" class="btn-secondary">← Назад</button>
+        <form action="/test/{{ test.id }}/back" method="post">
+            <input type="hidden" name="session_id" value="{{ session_id }}">
+            <button type="submit" class="btn-secondary">← Назад</button>
+        </form>
         {% endif %}
     </div>
-
-    <script>
-    function submitAnswer(scale, scoreValue) {
-        const urlParams = new URLSearchParams(window.location.search);
-        let scores = JSON.parse(decodeURIComponent(urlParams.get('scores_json') || '{}'));
-        
-        // Считаем баллы
-        scores[scale] = (scores[scale] || 0) + scoreValue;
-        
-        const nextIndex = parseInt(urlParams.get('q_index') || 0) + 1;
-        const username = urlParams.get('username');
-        const scoresStr = encodeURIComponent(JSON.stringify(scores));
-        
-        window.location.href = `/test/{{ test.id }}?username=${username}&q_index=${nextIndex}&scores_json=${scoresStr}`;
-    }
-    </script>
 </body>
 </html>
